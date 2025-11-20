@@ -1,4 +1,6 @@
 import pygame, random, sys
+import Perdiste # Importamos el archivo de Perdiste.py
+import Victoria
 
 def jugar_nivel(pantalla):
 # Para puntaje
@@ -51,8 +53,17 @@ def jugar_nivel(pantalla):
                         #Aumentamos o disminuimos el puntaje 
                         if i == correcta:
                             puntaje += 1
+                        
+                        # Como sumamos un punto reiniciamos las puertas y podremos elegir una nueva.
+                            abiertas = [False, False, False]
+                            correcta = random.randint(0, 2)
+
+                            # Si llega a 5 puntos sale la pantalla de Victoria
+                            if puntaje >= 5:
+                                Victoria.mostrar_victoria(pantalla)
+
                         else:
-                            puntaje -= 1
+                            Perdiste.mostrar_perdiste(pantalla) #Aquí llamamos la pantalla de perdiste
 
         pantalla.blit(background, (0, 0))
 
