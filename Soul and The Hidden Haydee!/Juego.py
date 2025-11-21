@@ -3,21 +3,25 @@ import Perdiste # Importamos el archivo de Perdiste.py
 import Victoria
 
 def jugar_nivel(pantalla):
-# Para puntaje
-    fuente = pygame.font.SysFont(None, 60) # declaramos la fuente y el tamaño
+# Esta sección de código establece el puntaje y la forma en que aparece en pantalla.
+    fuente = pygame.font.SysFont(None, 60) 
     puntaje = 0
 
-# Configuramos la pantalla 
+# Configuración de la pantalla.
     pantalla = pygame.display.set_mode((1038, 802))
     pygame.display.set_caption("Soul and The Hidden Haydee!")
 
-#Imagenes
-    background = pygame.image.load("puertaspixel.png").convert()# Imagen de fondo
-#cargamos las imagenes que se van a sobreponer en la imagen del fondo para simular una animación
+# Esta sección de código es para todo lo relacionado a las imágenes del juego.
+    
+    background = pygame.image.load("puertaspixel.png").convert() # Esta es la imagen de fondo
+    
+# Estas líneas son las imágenes del juego en sí, que se sobrepondrán a la imagen del fondo
+# para simular una animación.
     puerta_abierta = pygame.image.load("puerta_abierta.png").convert_alpha() 
     puerta_haydee = pygame.image.load("puerta_haydee.png").convert_alpha()
 
-# Declaramos las medidas que tienen las puertas, para que el jugador pueda hacer clic sobre estas y generar una interacción.
+# Aquí se declaran las medidas que tienen las puertas, 
+# para que el jugador pueda hacer clic sobre estas y generar una interacción.
 
     puerta1 = pygame.Rect(85, 212, 205, 380)
     puerta2 = pygame.Rect(416, 212, 205, 380)
@@ -25,67 +29,52 @@ def jugar_nivel(pantalla):
 
     puertas = [puerta1, puerta2, puerta3]
 
-    """# Para establacer las medidas antereriores dibujamos rectagulos en la pantalla para verificar que las coordenas estaban correctas o irlas modificando.
-    #pygame.draw.rect(pantalla, (255, 0, 0), puerta1, 3)
-    #pygame.draw.rect(pantalla, (255, 0, 0), puerta2, 3)
-    #pygame.draw.rect(pantalla, (255, 0, 0), puerta3, 3)
+    """
+    
+    Para establacer las medidas anteriores, se dibujaron rectángulos en la pantalla 
+    para verificar que las coordenadas estuvieran correctas o modificarlas de ser necesario.
+    
+    pygame.draw.rect(pantalla, (255, 0, 0), puerta1, 3)
+    pygame.draw.rect(pantalla, (255, 0, 0), puerta2, 3)
+    pygame.draw.rect(pantalla, (255, 0, 0), puerta3, 3)
+    
     """
 
-# Elegimos de manera aleatoria que puerta sera en donde estara Haydee
+# Esta línea de código randomiza la ubicación de Haydee.
     correcta = random.randint(0, 2)
 
-#Estado: todas cerradas al inicio 
+# Esta línea de código hace que todas las puertas estén cerradas al inicio.
     abiertas = [False, False, False]
 
-#Bucle principal 
+# Bucle principal 
     running = True
     while running:
-
+        
+        # Esta sección es específica por si el jugador cierra la ventana del juego.
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: # estas tres lineas de codigo nos ayudan a poder cerrar la ventana
+            if event.type == pygame.QUIT: 
                 sys.exit()
 
+            # Esta sección es para abrir las puertas si el jugador da clic en ellas.
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for i, puerta in enumerate(puertas):
                     if puerta.collidepoint(event.pos):
-                        abiertas[i] = True  # Se abre esta
+                        abiertas[i] = True  
 
-                        #Aumentamos o disminuimos el puntaje 
+                        # Aquí aumenta o disminuye el puntaje dependiendo si el jugador acierta o falla.
                         if i == correcta:
                             puntaje += 1
-                            
-                            # Mostrar a Haydee en la puerta correcta antes de reiniciar
-                            rect_haydee = puerta_haydee.get_rect(center=puertas[i].center)
-                            rect_haydee.y -= 22
-                            pantalla.blit(background, (0, 0))
-                            for j, p in enumerate(puertas):
-                                if abiertas[j]:
-                                    if j == correcta:
-                                        pantalla.blit(puerta_haydee, rect_haydee)
-                                    else:
-                                        rect_abierta = puerta_abierta.get_rect(center=p.center)
-                                        rect_abierta.y -= 22
-                                        pantalla.blit(puerta_abierta, rect_abierta)
-                            texto = fuente.render(str(puntaje), True, (255, 255, 0))
-                            pantalla.blit(texto, (950, 20))
-                            pygame.display.flip()
-
-                            pygame.time.delay(800)  # 👈 Pausa para que se vea Haydee
                         
-                        # Como sumamos un punto reiniciamos las puertas y podremos elegir una nueva.
+                        # Al sumar un punto, se reinician las puertas y se podrá elegir una nueva.
                             abiertas = [False, False, False]
                             correcta = random.randint(0, 2)
 
-                            # Si llega a 5 puntos sale la pantalla de Victoria
+                            # Si llega a 5 puntos saldrá la pantalla de Victoria.
                             if puntaje >= 5:
                                 Victoria.mostrar_victoria(pantalla)
 
                         else:
-                            Perdiste.mostrar_perdiste(pantalla) #Aquí llamamos la pantalla de perdiste
-                            puntaje=0 # reiniciamos el puntaje
-                            abiertas = [False, False, False]  # cerramos puertas
-                            correcta = random.randint(0, 2)   # nueva puerta correcta
-
+                            Perdiste.mostrar_perdiste(pantalla) # Aquí se llama a la pantalla de perdiste.
 
         pantalla.blit(background, (0, 0))
 
@@ -103,8 +92,8 @@ def jugar_nivel(pantalla):
                     rect_abierta.y -= 22  # Ajuste vertical de la imagen
                     pantalla.blit(puerta_abierta, rect_abierta)
         
-        # Establecimos el texto del puntaje en la pantalla
+        # Aquí se estableció el texto del puntaje obtenido y sus coordenadas.
         texto = fuente.render(str(puntaje), True, (255, 255, 0))
-        pantalla.blit(texto, (950, 20))# coordenadas de donde estara el puntaje
+        pantalla.blit(texto, (950, 20))
 
         pygame.display.flip()
