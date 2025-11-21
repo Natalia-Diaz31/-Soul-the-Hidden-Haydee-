@@ -46,6 +46,32 @@ def jugar_nivel(pantalla):
 # Esta línea de código hace que todas las puertas estén cerradas al inicio.
     abiertas = [False, False, False]
 
+#Funcion para abrir las puertas al inicio
+    def mostrar_puertas_abiertas_inicio():
+        pantalla.blit(background, (0, 0))
+
+        for i, puerta in enumerate(puertas):
+
+        # Si es la puerta correcta mostrar a Haydee
+            if i == correcta:
+                rect_haydee = puerta_haydee.get_rect(center=puerta.center)
+                rect_haydee.y -= 22  # Ajuste de posición de Haydee
+                pantalla.blit(puerta_haydee, rect_haydee)
+
+        # Si no es la correcta mostrar puerta abierta vacía
+            else:
+                rect_abierta = puerta_abierta.get_rect(center=puerta.center)
+                rect_abierta.y -= 22  # Ajuste de posición de puerta abierta
+                pantalla.blit(puerta_abierta, rect_abierta)
+
+        pygame.display.flip()  # Actualizar pantalla
+        pygame.time.delay(1000)  # Esperar un segundo antes de continuar
+
+
+# Llamar a la animación inicial de puertas abiertas
+    mostrar_puertas_abiertas_inicio()
+    abiertas = [False, False, False]  # Estado de puertas cerradas después de la animación
+    
 # Bucle principal 
     running = True
     while running:
@@ -64,10 +90,31 @@ def jugar_nivel(pantalla):
                         # Aquí aumenta o disminuye el puntaje dependiendo si el jugador acierta o falla.
                         if i == correcta:
                             puntaje += 1
+
+                            # Esta pate muestra a Haydee en la puerta correcta antes de reiniciar
+                            rect_haydee = puerta_haydee.get_rect(center=puertas[i].center)
+                            rect_haydee.y -= 22
+                            pantalla.blit(background, (0, 0))
+                            for j, p in enumerate(puertas):
+                                if abiertas[j]:
+                                    if j == correcta:
+                                        pantalla.blit(puerta_haydee, rect_haydee)
+                                    else:
+                                        rect_abierta = puerta_abierta.get_rect(center=p.center)
+                                        rect_abierta.y -= 22
+                                        pantalla.blit(puerta_abierta, rect_abierta)
+                            texto = fuente.render(str(puntaje), True, (255, 255, 0))
+                            pantalla.blit(texto, (950, 20))
+                            pygame.display.flip()
+
+                            pygame.time.delay(800)  # Hace una pausa para que se vea Haydee
                         
                         # Al sumar un punto, se reinician las puertas y se podrá elegir una nueva.
                             abiertas = [False, False, False]
                             correcta = random.randint(0, 2)
+                            #Vuelve a mostrar las puertas abiertas al reiniciar el juego
+                            mostrar_puertas_abiertas_inicio()
+                            abiertas = [False, False, False]
 
                             # Si llega a 5 puntos saldrá la pantalla de Victoria.
                             if puntaje >= 5:
@@ -75,6 +122,13 @@ def jugar_nivel(pantalla):
 
                         else:
                             Perdiste.mostrar_perdiste(pantalla) # Aquí se llama a la pantalla de perdiste.
+                            puntaje=0 # reiniciamos el puntaje
+                            abiertas = [False, False, False]  # cerramos puertas
+                            correcta = random.randint(0, 2)   # nueva puerta correcta
+                            
+                            mostrar_puertas_abiertas_inicio()
+                            abiertas = [False, False, False]
+
 
         pantalla.blit(background, (0, 0))
 
