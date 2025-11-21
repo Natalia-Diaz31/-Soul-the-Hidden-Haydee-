@@ -12,8 +12,9 @@ def mostrar_victoria(pantalla):
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if volver_jugar.collidepoint(event.pos):
-                    esperando = False  # Solo salimos si se hace clic en el botón
+                    esperando = False  
 
         pantalla.blit(background, (0, 0))
 
         pygame.display.flip()
+
