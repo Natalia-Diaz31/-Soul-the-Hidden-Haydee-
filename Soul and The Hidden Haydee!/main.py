@@ -2,7 +2,6 @@ import pygame
 from Inicio import mostrar_inicio
 from Introduccion import mostrar_introduccion
 from Juego import jugar_nivel
-from Victoria import mostrar_victoria
 
 pygame.init()
 pantalla = pygame.display.set_mode((1038, 802))
@@ -16,6 +15,3 @@ mostrar_introduccion(pantalla)
 
 # Luego mostramos el juego
 jugar_nivel(pantalla)
-
-# Finalmente mostramos la pantalla de victoria
-mostrar_victoria(pantalla)

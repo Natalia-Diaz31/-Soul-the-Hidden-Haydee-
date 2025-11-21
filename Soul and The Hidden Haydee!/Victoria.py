@@ -2,7 +2,7 @@ import pygame, sys
 
 def mostrar_victoria(pantalla):
     background = pygame.image.load("victoria.png").convert()
-    volver_jugar= pygame.Rect(300, 656, 430, 120)
+    volver_jugar= pygame.Rect(200, 470, 635, 200)
 
     esperando = True
     while esperando:
