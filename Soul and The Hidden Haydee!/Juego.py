@@ -65,7 +65,7 @@ def jugar_nivel(pantalla):
                 pantalla.blit(puerta_abierta, rect_abierta)
 
         pygame.display.flip()  # Actualizar pantalla
-        pygame.time.delay(1000)  # Esperar un segundo antes de continuar
+        pygame.time.delay(200)  # Esperar un segundo antes de continuar
 
 
 # Llamar a la animación inicial de puertas abiertas
@@ -157,5 +157,6 @@ def jugar_nivel(pantalla):
         pantalla.blit(texto, (950, 20))
 
         pygame.display.flip()
+
 
 
