@@ -120,6 +120,12 @@ def jugar_nivel(pantalla):
                             if puntaje >= 5:
                                 Victoria.mostrar_victoria(pantalla)
 
+                                # Reinicia el juego para volver a jugar
+                                puntaje = 0
+                                abiertas = [False, False, False]
+                                correcta = random.randint(0, 2)
+                                mostrar_puertas_abiertas_inicio()  # animación inicial de puertas
+
                         else:
                             Perdiste.mostrar_perdiste(pantalla) # Aquí se llama a la pantalla de perdiste.
                             puntaje=0 # reiniciamos el puntaje
@@ -151,4 +157,5 @@ def jugar_nivel(pantalla):
         pantalla.blit(texto, (950, 20))
 
         pygame.display.flip()
+
 
