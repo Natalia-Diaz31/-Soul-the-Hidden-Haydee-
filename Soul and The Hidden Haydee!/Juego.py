@@ -132,7 +132,7 @@ def jugar_nivel(pantalla):
 
         pantalla.blit(background, (0, 0))
 
-        # ---- Dibujar puertas abiertas si corresponde ----
+        # Dibuja puertas abiertas si corresponde
         for i, puerta in enumerate(puertas):
             if abiertas[i]:
                 if i == correcta:
@@ -151,3 +151,4 @@ def jugar_nivel(pantalla):
         pantalla.blit(texto, (950, 20))
 
         pygame.display.flip()
+
