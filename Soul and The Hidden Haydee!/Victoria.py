@@ -4,6 +4,7 @@ def mostrar_victoria(pantalla):
     background = pygame.image.load("victoria.png").convert()
     volver_jugar= pygame.Rect(200, 470, 635, 200)
 
+    # Esta sección permite que el jugador pueda seguir jugando después de acertar, o que pueda cerrar el juego.
     esperando = True
     while esperando:
         for event in pygame.event.get():
@@ -14,4 +15,5 @@ def mostrar_victoria(pantalla):
                     esperando = False  # Solo salimos si se hace clic en el botón
 
         pantalla.blit(background, (0, 0))
+
         pygame.display.flip()
